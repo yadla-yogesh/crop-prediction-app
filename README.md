@@ -2,7 +2,7 @@
 
 An AI-powered web application that predicts the most suitable crop based on soil nutrients and environmental conditions.
 
-🔗 **Live Demo:** https://YOUR-RENDER-LINK.onrender.com
+🔗 **Live Demo:** [https://YOUR-RENDER-LINK.onrender.com](https://crop-prediction-app-d8yd.onrender.com/)
 
 ---
 
@@ -119,6 +119,3 @@ Developed as part of a Machine Learning academic project.
 ---
 
 ⭐ If you found this project useful, feel free to star the repository!
-
-
-do check the render link https://crop-prediction-app-d8yd.onrender.com/
