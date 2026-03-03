@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Crop Recommendation System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.4s ease;
+        }
+
+        /* LIGHT MODE */
+        body.light {
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            color: #1b5e20;
+        }
+
+        /* DARK MODE */
+        body.dark {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            font-weight: 700;
+            font-size: 32px;
+        }
+
+        .card-custom {
+            border-radius: 18px;
+            padding: 30px;
+            transition: 0.4s;
+        }
+
+        body.light .card-custom {
+            background: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        body.dark .card-custom {
+            background: #1e1e1e;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .btn-custom {
+            background: #2e7d32;
+            color: white;
+            border-radius: 30px;
+            padding: 10px 30px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background: #1b5e20;
+            transform: scale(1.05);
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        body.light .result-box {
+            background: #e8f5e9;
+        }
+
+        body.dark .result-box {
+            background: #2c2c2c;
+        }
+
+        .confidence {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        .toggle-container {
+            text-align: right;
+            margin: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="light">
+
+<div class="toggle-container">
+    <button class="btn btn-outline-success btn-sm" onclick="toggleTheme()">🌙 Toggle Mode</button>
+</div>
+
+<div class="hero">
+    <h1>🌾 Smart Crop Recommendation System</h1>
+    <p>AI-powered crop prediction using Ensemble Machine Learning</p>
+</div>
+
+<div class="container d-flex justify-content-center">
+    <div class="card-custom col-md-7">
+
+        <form action="/predict" method="post">
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <input type="number" class="form-control" name="N" placeholder="Nitrogen" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <input type="number" class="form-control" name="P" placeholder="Phosphorus" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <input type="number" class="form-control" name="K" placeholder="Potassium" required>
+                </div>
+            </div>
+
+            <input type="number" step="any" class="form-control mb-3"
+                   name="temperature" placeholder="Temperature (°C)" required>
+
+            <input type="number" step="any" class="form-control mb-3"
+                   name="humidity" placeholder="Humidity (%)" required>
+
+            <input type="number" step="any" class="form-control mb-3"
+                   name="ph" placeholder="Soil pH" required>
+
+            <input type="number" step="any" class="form-control mb-3"
+                   name="rainfall" placeholder="Rainfall (mm)" required>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-custom">Predict Crop</button>
+            </div>
+
+        </form>
+
+        {% if prediction_text %}
+        <div class="result-box">
+            <h4>🌱 Recommended Crop: <strong>{{ prediction_text }}</strong></h4>
+            <div class="confidence">
+                Confidence Score: {{ confidence_score }}%
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+}
+</script>
+
+</body>
+</html>
